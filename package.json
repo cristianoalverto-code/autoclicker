@@ -1,0 +1,52 @@
+{
+  "name": "blackjack-esports",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "desktop:dev": "npm run build && electron .",
+    "dist:windows": "npm run build && electron-builder --win nsis --config.directories.output=%TEMP%\\Speed-AutoClicker-Packaging && node desktop/copy-installer.cjs",
+    "copy:windows-installer": "node desktop/copy-installer.cjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.speedautoclicker.desktop",
+    "productName": "Speed AutoClicker",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "desktop/**/*",
+      "!desktop/copy-installer.cjs",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "desktop/windows-clicker.ps1"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "Speed-AutoClicker-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
